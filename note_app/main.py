@@ -20,7 +20,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
 db = SQLAlchemy(app)
 
-
+"""
+python
+from main import db
+db.create_all()
+"""
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,8 +51,12 @@ def create_note():
         db.session.commit()
         return redirect("/notes/create")
 
+@app.route("/notes")
+def notes():
+    note = Note.query.first()
+    return render_template("notes.html", note=note)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-
 
 
