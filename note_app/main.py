@@ -5,10 +5,16 @@ import os
 from flask import Flask
 from flask_bootstrap import Bootstrap
 
+from flask.ext.admin import Admin
+
+
+
 app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
 #moment = Moment(app)
+admin = Admin(app)
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
