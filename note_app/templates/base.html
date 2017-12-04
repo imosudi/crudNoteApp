@@ -6,6 +6,10 @@
           href="{{url_for('static', filename='css/bootstrap.min.css')}}">
         <!--link rel="stylesheet" type="text/css"
           href="{{url_for('static', filename='css/narrow-jumbotron.css')}}"-->
+
+	<link rel="stylesheet" href="//necolas.github.io/normalize.css/7.0.0/normalize.css">
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Raleway:900,900"  rel="stylesheet"> 
+
         <link rel="stylesheet" type="text/css"  
           href="{{url_for('static', filename='css/sticky-footer.css')}}">
         <link rel="stylesheet" type="text/css"
@@ -41,7 +45,8 @@
             </li>
           </ul>
         </nav>
-        <h3 class="text-muted">crudNoteApp</h3>
+	<h3 class="font-weight-bold" >
+        <a class="text-primary" style="font-family: 'Indie Flower', cursive;">crud</a><a class="text-success" style="font-family: 'Raleway', sans-serif;">NoteApp</a></h3>
       </div>
 {% endblock %}
 {% block content %}
