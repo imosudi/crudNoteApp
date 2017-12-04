@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+{% block page_content %}  
+
+
+
+
+<!--form  action="/notes/create" method="POST">
+</form-->
+
+{% for notes in note %} 
+		<tr>
+			<!--td>{{notes.title}}</td-->
+			<td>{{notes.title}}</td>
+			<td>{{notes.body}}</td>
+		</tr>
+				
+{% endfor %}
+
+
+{% endblock %}
+
+
