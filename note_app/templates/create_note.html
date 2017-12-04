@@ -4,25 +4,9 @@
 {% block page_content %}  
 
 
-    <!--div class="container">
-      <div class="jumbotron mt-3">
-        <h1>Bottom Navbar example</h1>
-        <p class="lead">This example is a quick exercise to illustrate how the bottom navbar works.</p>
-        <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>
-      </div>
-    </div-->
-<form  action="/notes/create" method="POST">
-<div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-  <input placeholder="Title" type="text" name="title" class="card-header">
-</div>
-  <div class="card-body">
-    <input type="text" name="body" class="card-text">
-  </div>
-</div>
-</form>
 
 
-<form  action="/notes/create" method="POST">
+<!--form  action="/notes/create" method="POST">
 	<div class="row">    <label class="btn btn-lg btn-primary">Title</label>
     <input type="text" name="title">
 
@@ -30,6 +14,23 @@
     <input type="text" name="body">
 
     <input class="btn btn-lg btn-primary" role="button" type="submit" value="Create">
+</form-->
+
+<form action="/notes/create" method="POST">
+  <fieldset>
+    <legend>Create note</legend>
+    <div class="form-group">
+      <label for="title">Title </label>
+      <input class="form-control" id="title" name="title" aria-describedby="titlelHelp" placeholder="Enter Note Title" type="text">
+      <small id="titleHelp" class="form-text text-muted">Make your title brief, then you can provide the note body below.</small>
+    </div>
+    
+<div class="form-group">
+      <!--label for="exampleTextarea">Title </label-->
+      <textarea class="form-control" id="body" name="body" rows="10"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </fieldset>
 </form>
 
 {% endblock %}
