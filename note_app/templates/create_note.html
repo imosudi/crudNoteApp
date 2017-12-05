@@ -14,6 +14,12 @@
 
     <input class="btn btn-lg btn-primary" role="button" type="submit" value="Create">
 </form-->
+<!--
+            <div id="messages" class="hide" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <div id="messages_content"></div>
+            </div>
+-->
 
 <form id="noteForm" action="/notes/create" method="POST" onSubmit="alert('Your note has been created.');">
   <fieldset>
@@ -32,8 +38,15 @@
 </form>
 <div id="submitNotice"></div>
 
-
-
+<!--        <script>
+            $('#noteForm').submit(function(e) {
+                $('#messages').removeClass('hide').addClass('alert alert-success alert-dismissible').slideDown().show();
+                $('#messages_content').html('<h4>MESSAGE HERE</h4>');
+                $('#modal').modal('show');
+                e.preventDefault();
+            });
+        </script>
+-->
 {% endblock %}
 
 
