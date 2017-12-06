@@ -37,12 +37,14 @@ class Note(db.Model):
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    pageName = "home"
+    return render_template("home.html", pageName=pageName)
 
 @app.route("/notes/create", methods=["GET", "POST"])
 def create_note():
+    pageName = "/notes/create"
     if request.method == "GET":
-        return render_template("create_note.html")
+        return render_template("create_note.html", pageName=pageName)
     else:
         title = request.form["title"]
         body = request.form["body"]
@@ -53,8 +55,9 @@ def create_note():
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
+    pageName = "notes"
     notes = Note.query.first()
-    return render_template("notes.html", notes=notes)
+    return render_template("notes.html", pageName=pageName)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
