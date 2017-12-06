@@ -51,10 +51,10 @@ def create_note():
         db.session.commit()
         return redirect("/notes/create")
 
-@app.route("/notes")
+@app.route("/notes", methods=["GET", "POST"])
 def notes():
-    note = Note.query.first()
-    return render_template("notes.html", note=note)
+    notes = Note.query.first()
+    return render_template("notes.html", notes=notes)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
