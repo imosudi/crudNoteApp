@@ -55,7 +55,7 @@ def create_note():
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
-    pageName = "notes"
+    pageName = "/notes"
     notes = Note.query.first()
     return render_template("notes.html", pageName=pageName)
 
