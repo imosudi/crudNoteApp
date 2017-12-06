@@ -5,8 +5,8 @@ import os
 from flask import Flask
 from flask_bootstrap import Bootstrap
 
-from flask.ext.admin import Admin
-
+#from flask.ext.admin import Admin
+from flask_admin import Admin
 
 
 app = Flask(__name__)
@@ -18,6 +18,7 @@ admin = Admin(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 """
@@ -56,8 +57,8 @@ def create_note():
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
     pageName = "/notes"
-    notes = Note.query.first()
-    return render_template("notes.html", pageName=pageName)
+    notes = Note.query.all()
+    return render_template("notes.html", notes=notes, pageName=pageName)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
