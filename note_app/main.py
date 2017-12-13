@@ -10,6 +10,8 @@ from flask_admin import Admin
 from flask_moment import Moment
 from datetime import datetime
 
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
+
 app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
@@ -38,6 +40,25 @@ class Note(db.Model):
         self.title = title
         self.body = body
 """
+"""
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])  
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+"""
+"""  
+    def __init__(self, username, email, password, accept_tos):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.accept_tos = accept_tos
+"""
+
 from models import *
 
 
@@ -58,13 +79,58 @@ def create_note():
         note = Note(title=title, body=body)
         db.session.add(note)
         db.session.commit()
-        return redirect("/notes/create", current_time=datetime.utcnow())
+        return redirect("/notes/create", form=form, current_time=datetime.utcnow())
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
     pageName = "/notes"
     notes = Note.query.all()
     return render_template("notes.html", notes=notes, pageName=pageName, current_time=datetime.utcnow())
+
+"""
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    pageName = "/register"
+    notes = Note.query.all()
+    form = RegistrationForm(request.form)
+    if request.method == "GET":
+        return render_template("register.html", notes=notes, pageName=pageName, current_time=datetime.utcnow())
+    else:
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+        accept_tos = request.form["accept_tos"]
+        noteUser = RegistrationForm(username=username, email=email, password=password, accept_tos=accept_tos)
+        db.session.add(noteUser)
+        db.session.commit()
+        return redirect("register.html", pageName=pageName, form=form, current_time=datetime.utcnow())
+"""
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    pageName= "/register"
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(form.username.data, form.email.data,
+                    form.password.data)
+        db_session.add(user)
+        flash('Thanks for registering')
+        return redirect(url_for('login'))
+    return render_template('register.html', pageName=pageName, form=form, current_time=datetime.utcnow())
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

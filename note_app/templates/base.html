@@ -9,11 +9,10 @@
 
 	<link rel="stylesheet" href="//necolas.github.io/normalize.css/7.0.0/normalize.css">
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Raleway:900,900"  rel="stylesheet"> 
-
+        <link href="https://fonts.googleapis.com/css?family=Cambay" rel="stylesheet">
         <link rel="stylesheet" type="text/css"  
           href="{{url_for('static', filename='css/sticky-footer.css')}}">
-        <!--link rel="stylesheet" type="text/css"
-          href="{{url_for('static', filename='css/narrow-jumbotron.css')}}"-->
+
 <style>
 .textContainer { 
     height: 345px; 
@@ -50,22 +49,32 @@
 
 	    <li class="nav-item">
               <!-- a class="nav-link" href="/notes"-->
+		{% if pageName == "/register" %}
+			<a class="nav-link active" href="/register">
+		{% else %}
+			<a class="nav-link " href="/register">
+		{% endif %}
+	Register</a>
+            </li>
+
+            <li class="nav-item">
+              <!--a class="nav-link" href="/notes/create"-->
+                {% if pageName == "/notes/create" %}
+                        <a class="nav-link active" href="/notes/create">
+                {% else %}
+                        <a class="nav-link " href="/notes/create">
+                {% endif %}
+        CreateNote</a>
+            </li>
+
+            <li class="nav-item">
+              <!--a class="nav-link" href="/notes/create"-->
 		{% if pageName == "/notes" %}
 			<a class="nav-link active" href="/notes">
 		{% else %}
 			<a class="nav-link " href="/notes">
 		{% endif %}
-	View all notes</a>
-            </li>
-
-            <li class="nav-item">
-              <!--a class="nav-link" href="/notes/create"-->
-		{% if pageName == "/notes/create" %}
-			<a class="nav-link active" href="/notes/create">
-		{% else %}
-			<a class="nav-link " href="/notes/create">
-		{% endif %}
-	Create a note</a>
+	ViewNote</a>
             </li>
 
             <li class="nav-item">
@@ -74,7 +83,7 @@
 			<a class="nav-link active" href="/about">
 		{% else %}
 			<a class="nav-link " href="#">
-		{% endif %}	
+		{% endif %}
 	About</a>
             </li>
 
