@@ -7,12 +7,13 @@ from flask_bootstrap import Bootstrap
 
 #from flask.ext.admin import Admin
 from flask_admin import Admin
-
+from flask_moment import Moment
+from datetime import datetime
 
 app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
-#moment = Moment(app)
+moment = Moment(app)
 admin = Admin(app)
 
 
@@ -27,6 +28,7 @@ from main import db
 db.create_all()
 """
 
+"""
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -35,30 +37,34 @@ class Note(db.Model):
     def __init__(self, title, body):
         self.title = title
         self.body = body
+"""
+from models import *
+
 
 @app.route("/")
 def home():
     pageName = "home"
-    return render_template("home.html", pageName=pageName)
+    return render_template("home.html", pageName=pageName, current_time=datetime.utcnow())
+
 
 @app.route("/notes/create", methods=["GET", "POST"])
 def create_note():
     pageName = "/notes/create"
     if request.method == "GET":
-        return render_template("create_note.html", pageName=pageName)
+        return render_template("create_note.html", pageName=pageName, current_time=datetime.utcnow())
     else:
         title = request.form["title"]
         body = request.form["body"]
         note = Note(title=title, body=body)
         db.session.add(note)
         db.session.commit()
-        return redirect("/notes/create")
+        return redirect("/notes/create", current_time=datetime.utcnow())
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
     pageName = "/notes"
     notes = Note.query.all()
-    return render_template("notes.html", notes=notes, pageName=pageName)
+    return render_template("notes.html", notes=notes, pageName=pageName, current_time=datetime.utcnow())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

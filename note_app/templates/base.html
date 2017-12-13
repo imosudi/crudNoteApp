@@ -7,13 +7,19 @@
         <link rel="stylesheet" type="text/css"
           href="{{url_for('static', filename='css/narrow-jumbotron.css')}}">
 
-	<!--link rel="stylesheet" href="//necolas.github.io/normalize.css/7.0.0/normalize.css"-->
+	<link rel="stylesheet" href="//necolas.github.io/normalize.css/7.0.0/normalize.css">
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Raleway:900,900"  rel="stylesheet"> 
 
         <link rel="stylesheet" type="text/css"  
           href="{{url_for('static', filename='css/sticky-footer.css')}}">
         <!--link rel="stylesheet" type="text/css"
           href="{{url_for('static', filename='css/narrow-jumbotron.css')}}"-->
+<style>
+.textContainer { 
+    height: 345px; 
+    line-height: 340px;
+}
+</style>
 {% endblock %}
 
 
@@ -22,6 +28,7 @@
 <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 
 
+{{ moment.include_moment() }}
 {% endblock %}
 
 {# Finally, round things out with navigation #}
@@ -81,5 +88,11 @@
 		{% block page_content %} {% endblock %}
 
 </div>
-<div class="footer"  style="text-align: center;"> &copy; copyright 2017 | <a href="mailto:imosudi@gmail.com">imosudi@gmail.com</a> | <a href="http://www.mioemi.com">wwww.mioemi.com</a> </div>
+<footer class="footer">
+	<div class="container" style="text-align:center;"> 
+		&copy; copyright {{ moment(current_time).format('YYYY') }} 
+		|<a href="mailto:imosudi@gmail.com"> imosudi@gmail.com</a> 
+		|<a href="http://www.mioemi.com"> www.mioemi.com</a> 
+	</div>
+</footer>
 {% endblock %}
