@@ -9,15 +9,19 @@ from flask_bootstrap import Bootstrap
 from flask_admin import Admin
 from flask_moment import Moment
 from datetime import datetime
+from flask_script import Manager
 
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField, IntegerField, HiddenField
+from wtforms.validators import Required
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'This is really hard to guess string'
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 admin = Admin(app)
-
+manager = Manager(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
@@ -28,9 +32,8 @@ db = SQLAlchemy(app)
 python
 from main import db
 db.create_all()
-"""
 
-"""
+
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -39,8 +42,7 @@ class Note(db.Model):
     def __init__(self, title, body):
         self.title = title
         self.body = body
-"""
-"""
+
 class RegistrationForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])  
@@ -50,8 +52,7 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
-"""
-"""  
+ 
     def __init__(self, username, email, password, accept_tos):
         self.username = username
         self.email = email
@@ -104,7 +105,7 @@ def register():
         db.session.add(noteUser)
         db.session.commit()
         return redirect("register.html", pageName=pageName, form=form, current_time=datetime.utcnow())
-"""
+
 class RegistrationForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
@@ -114,7 +115,7 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
-
+"""
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     pageName= "/register"
@@ -129,10 +130,6 @@ def register():
 
 
 
-
-
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
-
-
+    #app.run(host='0.0.0.0', debug=True)
+    manager.run()
