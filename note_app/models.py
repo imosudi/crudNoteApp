@@ -1,5 +1,10 @@
 from main import db
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+#from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from flask_wtf import Form
+
+from wtforms import StringField, SubmitField, IntegerField, HiddenField, validators, BooleanField, PasswordField
+from wtforms.validators import Required
+
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
