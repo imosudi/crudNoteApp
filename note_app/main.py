@@ -9,7 +9,7 @@ from flask_admin import Admin
 from flask_moment import Moment
 from datetime import datetime
 from flask_script import Manager
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
 from wtforms import BooleanField, StringField, PasswordField, validators, SubmitField, IntegerField, HiddenField
 from wtforms.validators import Required
@@ -120,24 +120,16 @@ class RegistrationForm(Form):
 def register():
     pageName= "/register"
     form = RegistrationForm(request.form)
+    form2 = RegistrationForm()
     if request.method == 'POST' and form.validate():
         user = User(form.username.data, form.email.data,
                     form.password.data)
         db_session.add(user)
         flash('Thanks for registering')
         return redirect(url_for('login'))
-    return render_template('register.html', pageName=pageName, form=form, current_time=datetime.utcnow())
+    return render_template('register.html', pageName=pageName, form=form, form2=form2, current_time=datetime.utcnow())
 
-@app.route('/register2', methods=['GET', 'POST'])
-def register2():
-    pageName = "/register2"
-    form = appRegister()
-    return render_template('register2.html', pageName=pageName, form=form, current_time=datetime.utcnow())
-
-class appRegister(Form):
-    n = IntegerField('Provide n for nXnXn Rubiks\'s Cube ', validators=[Required()])
-    submit = SubmitField('Submit') 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-    manager.run()
+    manager.run(me)

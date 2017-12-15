@@ -1,6 +1,6 @@
 from main import db
 #from wtforms import Form, BooleanField, StringField, PasswordField, validators
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
 from wtforms import StringField, SubmitField, IntegerField, HiddenField, validators, BooleanField, PasswordField
 from wtforms.validators import Required
@@ -15,7 +15,7 @@ class Note(db.Model):
         self.title = title
         self.body = body
 
-class RegistrationForm(Form):  
+class RegistrationForm(FlaskForm):  
     username = StringField('Username', [validators.Length(min=4, max=25)])  
     email = StringField('Email Address', [validators.Length(min=6, max=35)])  
     password = PasswordField('New Password', [  
@@ -24,7 +24,7 @@ class RegistrationForm(Form):
     ])  
     confirm = PasswordField('Repeat Password')  
     accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()]) 
-
+    submit = SubmitField('Complete Registeration')
 
 """
 
