@@ -15,7 +15,7 @@ class Note(db.Model):
         self.title = title
         self.body = body
 
-class RegistrationForm(FlaskForm):  
+class registrationForm(FlaskForm):  
     username = StringField('Username', [validators.Length(min=4, max=25)])  
     email = StringField('Email Address', [validators.Length(min=6, max=35)])  
     password = PasswordField('New Password', [  
@@ -25,6 +25,27 @@ class RegistrationForm(FlaskForm):
     confirm = PasswordField('Repeat Password')  
     accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()]) 
     submit = SubmitField('Complete Registeration')
+
+class RegistrationForm(db.Model):
+    __tablename__ = 'registrationforms'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+    email = db.Column(db.String(64), unique=True)
+    password = db.Column(db.String(64))
+    accept_tos = db.Column(db.Boolean)
+
+    title = db.Column(db.String(80))
+    body = db.Column(db.Text)
+
+    def __init__(self, username, email, password, accept_tos):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.accept_tos = accept_tos
+
+
+
+
 
 """
 
